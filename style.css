@@ -1,0 +1,99 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+    background-color: #16A3B5;
+    padding: 5px;
+}
+
+.header h1 {
+    font-size: 18px;
+    color: #fff;
+    margin-left: 20px;
+}
+
+.tb-heading {
+    font-weight: normal;
+}
+
+textarea,
+select,
+input[type="text"],
+input[type="number"] {
+    display: block;
+    padding: 5px;
+    width: 100%;
+    outline: 1;
+    outline-color: #a8d2fe;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+}
+
+.br-radius {
+    border-radius: 5px;
+}
+
+.box-control button {
+    padding: 5px;
+    outline: 0;
+    border: 0;
+}
+
+.box-control button.remove {
+    color: #000;
+    background-color: #FCC009;
+}
+
+.box-control button {
+    color: #fff;
+    background-color: #26A845;
+}
+
+
+
+
+/* textarea {
+    display: block;
+    outline-color: #B4D6FA;
+} */
+
+form {
+    padding: 20px 10px 10px 20px;
+    border: 1px solid #ccc;
+}
+
+form label {
+
+}
+
+form label span {
+    color: red;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+/* Css for table result start */
+table {
+    width: 100%;
+}
+table, th,td {
+    border: 2px solid #ccc;
+    border-collapse: collapse;
+}
+
+th,td {
+    padding: 10px;
+}
+
+th {
+    text-transform: capitalize;
+}
+
+/* Css for table result end */
+
