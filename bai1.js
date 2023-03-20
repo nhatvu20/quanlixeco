@@ -155,11 +155,11 @@ function clearItem(){
         e.preventDefault();
     }
     const name=document.querySelector('#tenxe').value;
-    const img=document.querySelector('#hinhanh').value;
+    // const img=document.querySelector('#hinhanh').value;
     car=car.filter((item)=>{
         console.log(name)
         console.log(item.tenxe)
-        return item.tenxe!=name && item.hinhanh!=img;
+        return item.tenxe!=name;
     })
     render(car)
 }
@@ -168,9 +168,9 @@ function search(){
     var searchbar=document.querySelector('.search-box input').value.toLowerCase();
     var newcar=car.filter((item)=>{
         console.log('hello')
-        return item.tenxe.includes(searchbar.toLowerCase())||item.hangxe.includes(searchbar.toLowerCase())
-        ||item.giatien.includes(searchbar.toLowerCase())||item.nguoilienhe.includes(searchbar.toLowerCase())
-        ||item.sodienthoai.includes(searchbar.toLowerCase())||item.email.includes(searchbar.toLowerCase())
+        return (item.tenxe.toLowerCase()).includes(searchbar)||(item.hangxe.toLowerCase()).includes(searchbar)
+        ||(item.giatien.toLowerCase()).includes(searchbar)||(item.nguoilienhe.toLowerCase()).includes(searchbar)
+        ||(item.sodienthoai.toLowerCase()).includes(searchbar)||(item.email.toLowerCase()).includes(searchbar)
 
         // return item.tenxe.indexOf(searchbar.toLowerCase())>-1||item.hangxe.indexOf(searchbar.toLowerCase())>-1
         // ||item.giatien.indexOf(searchbar.toLowerCase())>-1||item.nguoilienhe.indexOf(searchbar.toLowerCase())>-1
