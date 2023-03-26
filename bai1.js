@@ -42,7 +42,7 @@ function validate_sodienthoai(){
     }
 }
 
-var cars = function (id,tenxe,hinhanh,hangxe,giatien,nguoilienhe,sodienthoai,email){
+var car = function (id,tenxe,hinhanh,hangxe,giatien,nguoilienhe,sodienthoai,email){
     this.id=id,
     this.tenxe=tenxe,
     this.hinhanh=hinhanh,
@@ -55,48 +55,66 @@ var cars = function (id,tenxe,hinhanh,hangxe,giatien,nguoilienhe,sodienthoai,ema
 
 
 const result = document.querySelector('#result');
-var car=[];
-var CurItem=null;
+var cars=[];
 function validate(){
     var form=document.querySelector('form');
     form.onsubmit=(event)=>{
         event.preventDefault();
-        // console.log('hello');    
-        let tenxe=document.querySelector('#tenxe').value;
-        let hinhanh=document.querySelector('#hinhanh').value;
-        let hangxe=document.querySelector('#hangxe').value;
-        let giatien=document.querySelector('#giatien').value;
-        let nguoilienhe=document.querySelector('#nguoilienhe').value;
-        let sodienthoai=document.querySelector('#sodienthoai').value;
-        let email=document.querySelector('#email').value;
-        let id = car.length+1;
-        console.log(tenxe,hinhanh,hangxe,giatien,nguoilienhe,sodienthoai,email)
+        // console.log('hello');   
+        var id = form.querySelector('#idxe').value;
+        var newcar=getCarValue();
+        // console.log(tenxe,hinhanh,hangxe,giatien,nguoilienhe,sodienthoai,email)
 
         if(tenxe&&hinhanh&&hangxe&&giatien&&nguoilienhe&&sodienthoai&&email&&validate_email()&&validate_sodienthoai()){
-            car.push(new cars(id,tenxe,hinhanh,hangxe,giatien,nguoilienhe,sodienthoai,email))
-            render(car);
+            if(id){
+                var indexFound=cars.findIndex((item)=>{
+                    return item.id==id;
+                })
+                cars[indexFound]=newcar;
+            }
+            else {
+                cars.push(newcar)
+            }
+            resetField();
+            console.log(cars);
         }
-        document.querySelector('#tenxe').value='';
-        document.querySelector('#hinhanh').value='';
-        document.querySelector('#giatien').value='';
-        document.querySelector('#nguoilienhe').value='';
-        document.querySelector('#sodienthoai').value='';
-        document.querySelector('#email').value='';
-        console.log(car);
-        // console.log(car.length);
+        render(cars);
+        // console.log(cars.length);
     }
 
+}
+
+function resetField(){
+    document.querySelector('#idxe').value='';
+    document.querySelector('#tenxe').value='';
+    document.querySelector('#hinhanh').value='';
+    document.querySelector('#giatien').value='';
+    document.querySelector('#nguoilienhe').value='';
+    document.querySelector('#sodienthoai').value='';
+    document.querySelector('#email').value='';
+}
+
+function getCarValue(){
+    let id = document.querySelector('#idxe').value;
+    let tenxe=document.querySelector('#tenxe').value;
+    let hinhanh=document.querySelector('#hinhanh').value;
+    let hangxe=document.querySelector('#hangxe').value;
+    let giatien=document.querySelector('#giatien').value;
+    let nguoilienhe=document.querySelector('#nguoilienhe').value;
+    let sodienthoai=document.querySelector('#sodienthoai').value;
+    let email=document.querySelector('#email').value;
+    return (new car(id?id:cars.length+1,tenxe,hinhanh,hangxe,giatien,nguoilienhe,sodienthoai,email));
 }
 
 function render(car){
     // console.log('hello')
     let html=``;
-    car.map((item,index) => {
+    car.map((item,index=0) => {
         // console.log(item);
         index++;
         html+=
         `
-        <tr onclick="get(${item.id})">
+        <tr id="${item.id}" onclick="get(${item.id})">
             <td>${index}</td>
             <td>  <img src="${item.hinhanh}" width="50px"></td>
             <td>${item.tenxe}</td>
@@ -108,19 +126,16 @@ function render(car){
         </tr>
         `;
     });
-    // console.log(html);
+    console.log(html);
     result.innerHTML=html;
     // console.log('hello')
 }
 
 
 function get(id){
-    // const inforCurr=document.querySelectorAll('#result tr');
-    // console.log(inforCurr);
-    car.forEach((item)=>{
-        if(item.id===id){
-            CurItem=item;
-            console.log(CurItem)
+    cars.forEach((item)=>{
+        if(item.id==id){
+            const idxe=document.querySelector('#idxe').value=item.id;
             const tenxe=document.querySelector('#tenxe').value=item.tenxe;
             const hinhanh=document.querySelector('#hinhanh').value=item.hinhanh;
             const hangxe=document.querySelector('#hangxe').value=item.hangxe;
@@ -130,58 +145,37 @@ function get(id){
             const email=document.querySelector('#email').value=item.email;
         }
     })
-    // clearItem(CurItem)
 }
-// console.log(CurItem)
-// function clearItem(CurItem){
-//     var form=document.querySelector('form');
-//     form.onsubmit=(e)=>{
-//         e.preventDefault();
-//     }
-//     console.log('hello')
-//     car=car.filter((item)=>{
-//         console.log(CurItem.id)
-//         console.log(item.id)
-//         return item.id!=CurItem.id;
-//     })
-//     render(car)
-//     console.log(car);
-//     console.log('hello')
-// }
 
 function clearItem(){
     var form=document.querySelector('form');
     form.onsubmit=(e)=>{
         e.preventDefault();
     }
-    const name=document.querySelector('#tenxe').value;
-    // const img=document.querySelector('#hinhanh').value;
-    car=car.filter((item)=>{
-        console.log(name)
-        console.log(item.tenxe)
-        return item.tenxe!=name;
+    const id = document.querySelector('#idxe').value;
+    cars=cars.filter((item)=>{
+        // console.log(id)
+        // console.log(item.id)
+        return item.id!=id;
     })
-    render(car)
+    render(cars);
+    resetField();
 }
 
 function search(){
     var searchbar=document.querySelector('.search-box input').value.toLowerCase();
-    var newcar=car.filter((item)=>{
-        console.log('hello')
+    var newcar=cars.filter((item)=>{
+        // console.log('hello')
         return (item.tenxe.toLowerCase()).includes(searchbar)||(item.hangxe.toLowerCase()).includes(searchbar)
         ||(item.giatien.toLowerCase()).includes(searchbar)||(item.nguoilienhe.toLowerCase()).includes(searchbar)
         ||(item.sodienthoai.toLowerCase()).includes(searchbar)||(item.email.toLowerCase()).includes(searchbar)
-
-        // return item.tenxe.indexOf(searchbar.toLowerCase())>-1||item.hangxe.indexOf(searchbar.toLowerCase())>-1
-        // ||item.giatien.indexOf(searchbar.toLowerCase())>-1||item.nguoilienhe.indexOf(searchbar.toLowerCase())>-1
-        // ||item.sodienthoai.indexOf(searchbar.toLowerCase())>-1||item.email.indexOf(searchbar.toLowerCase())>-1
     })
     console.log(newcar);
     if(searchbar.length!=0){
         render(newcar);
     }else{
-        render(car);
+        render(cars);
     }
-    console.log('hello')
+    // console.log('hello')
 }
 document.querySelector('.search-box input').addEventListener('keyup',search)
